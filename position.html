@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" contenecho "# projet" >> README.mdt="width=device-width, initial-scale=1.0" />
+  <title>Positionnement CSS – Exemples réels (cube)</title>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617);
+      color: #e5e7eb;
+      line-height: 1.7;
+    }
+
+    header {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    header h1 { font-size: 3rem; color: #38bdf8; margin-bottom: 1rem; }
+    header p { max-width: 850px; margin: auto; color: #cbd5f5; }
+
+    section {
+      max-width: 1100px;
+      margin: 4rem auto;
+      padding: 3rem;
+      background: rgba(15, 23, 42, 0.85);
+      border-radius: 18px;
+      border: 1px solid rgba(148,163,184,0.15);
+    }
+
+    h2 { color: #7dd3fc; margin-bottom: 1rem; font-size: 2rem; }
+    p { margin-bottom: 1rem; }
+
+    .demo {
+      margin-top: 2rem;
+      padding: 2rem;
+      border-radius: 14px;
+      background: #020617;
+      border: 1px dashed #334155;
+    }
+
+    .room {
+      position: relative;
+      height: 220px;
+      border: 2px dashed #475569;
+      margin-top: 1.5rem;
+      padding: 1rem;
+      overflow: auto;
+    }
+
+    /* ===== CUBE RÉEL ===== */
+    .cube {
+      width: 90px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      border-radius: 6px;
+      background: linear-gradient(145deg, #38bdf8, #0ea5e9);
+      box-shadow: inset -6px -6px 12px rgba(255,255,255,0.2),
+                  inset 6px 6px 12px rgba(0,0,0,0.3);
+      color: #020617;
+    }
+
+    .relative { position: relative; top: 20px; left: 20px; background: linear-gradient(145deg, #4ade80, #22c55e); }
+    .absolute { position: absolute; top: 20px; right: 20px; background: linear-gradient(145deg, #fb7185, #e11d48); }
+    .sticky { position: sticky; top: 10px; background: linear-gradient(145deg, #facc15, #eab308); }
+
+    .fixed-sim {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(145deg, #a78bfa, #7c3aed);
+    }
+
+    button {
+      margin-top: 1.5rem;
+      padding: 0.7rem 1.2rem;
+      background: #38bdf8;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover { background: #7dd3fc; }
+
+    code {
+      display: block;
+      background: #020617;
+      color: #93c5fd;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-top: 1rem;
+    }
+
+    /* ===== QUIZ ===== */
+    .quiz label { display: block; margin: 0.5rem 0; cursor: pointer; }
+    .result { margin-top: 1rem; font-weight: bold; color: #38bdf8; }
+
+    footer { text-align: center; padding: 3rem; color: #94a3b8; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Le positionnement en CSS</h1>
+  <p>
+    Chaque type de positionnement est expliqué avec un exemple réel :
+    <strong>un cube dans une pièce</strong>, pour une visualisation claire et logique.
+  </p>
+</header>
+
+<section>
+  <h2>Position : static (cube normal)</h2>
+  <p>Le cube est posé naturellement dans la pièce et suit le flux normal.</p>
+  <div class="demo">
+    <div class="room">
+      <div class="cube">Cube</div>
+    </div>
+    <code>position: static;</code>
+  </div>
+</section>
+
+<section>
+  <h2>Position : relative (cube déplacé légèrement)</h2>
+  <p>Le cube reste dans le flux mais est décalé par rapport à sa position initiale.</p>
+  <div class="demo">
+    <div class="room">
+      <div class="cube relative">Cube</div>
+    </div>
+    <code>position: relative; top: 20px; left: 20px;</code>
+  </div>
+</section>
+
+<section>
+  <h2>Position : absolute (cube collé au mur)</h2>
+  <p>Le cube est retiré du flux et positionné par rapport à la pièce.</p>
+  <div class="demo">
+    <div class="room">
+      <div class="cube absolute">Cube</div>
+    </div>
+    <code>position: absolute; top: 20px; right: 20px;</code>
+  </div>
+</section>
+
+<section>
+  <h2>Position : fixed (cube du gardien – zone précise)</h2>
+  <p>
+    Le cube reste visible dans une zone précise seulement.
+    Il ne flotte pas sur toute la page.
+  </p>
+  <div class="demo">
+    <div class="room">
+      <div style="height:500px"></div>
+      <div class="cube fixed-sim">Cube</div>
+    </div>
+    <code>Simulation pédagogique du fixed (zone limitée)</code>
+  </div>
+</section>
+
+<section>
+  <h2>Position : sticky (cube qui suit puis se bloque)</h2>
+  <p>Le cube défile normalement puis se bloque à une position donnée.</p>
+  <div class="demo">
+    <div class="room">
+      <div style="height:120px"></div>
+      <div class="cube sticky">Cube</div>
+      <div style="height:300px"></div>
+    </div>
+    <code>position: sticky; top: 10px;</code>
+  </div>
+</section>
+
+<section>
+  <h2>Quiz de validation</h2>
+  <div class="quiz">
+
+    <!-- Question 1 -->
+    <div class="question" data-correct="A">
+      <p><strong>1. Quelle est la valeur de positionnement par défaut de tous les éléments HTML ?</strong></p>
+      <label><input type="radio" name="q1" value="A"> A. static</label>
+      <label><input type="radio" name="q1" value="B"> B. initial</label>
+      <label><input type="radio" name="q1" value="C"> C. fixed</label>
+      <label><input type="radio" name="q1" value="D"> D. relative</label>
+      <p class="feedback"></p>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="question" data-correct="A">
+      <p><strong>2. Lorsqu'un élément est en <code>position: relative</code>, par rapport à quoi se déplace-t-il avec <code>top: 20px</code> ?</strong></p>
+      <label><input type="radio" name="q2" value="A"> A. Sa position d'origine dans le flux normal</label>
+      <label><input type="radio" name="q2" value="B"> B. Le viewport</label>
+      <label><input type="radio" name="q2" value="C"> C. L’élément frère précédent</label>
+      <label><input type="radio" name="q2" value="D"> D. Le parent direct</label>
+      <p class="feedback"></p>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="question" data-correct="C">
+      <p><strong>3. Un élément avec <code>position: absolute</code> se place par rapport à :</strong></p>
+      <label><input type="radio" name="q3" value="A"> A. Son parent direct</label>
+      <label><input type="radio" name="q3" value="B"> B. Le viewport uniquement</label>
+      <label><input type="radio" name="q3" value="C"> C. Le premier ancêtre non static</label>
+      <label><input type="radio" name="q3" value="D"> D. L’élément body</label>
+      <p class="feedback"></p>
+    </div>
+
+    <!-- Question 4 -->
+    <div class="question" data-correct="C">
+      <p><strong>4. Quel mode permet à un élément de rester visible au même endroit lors du scroll ?</strong></p>
+      <label><input type="radio" name="q4" value="A"> A. sticky</label>
+      <label><input type="radio" name="q4" value="B"> B. absolute</label>
+      <label><input type="radio" name="q4" value="C"> C. fixed</label>
+      <label><input type="radio" name="q4" value="D"> D. relative</label>
+      <p class="feedback"></p>
+    </div>
+
+    <!-- Question 5 -->
+    <div class="question" data-correct="B">
+      <p><strong>5. Quel est le comportement particulier de <code>sticky</code> ?</strong></p>
+      <label><input type="radio" name="q5" value="A"> A. Insensible aux clics</label>
+      <label><input type="radio" name="q5" value="B"> B. Relative puis bloqué comme fixed</label>
+      <label><input type="radio" name="q5" value="C"> C. Collage magnétique</label>
+      <label><input type="radio" name="q5" value="D"> D. Centré automatiquement</label>
+      <p class="feedback"></p>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <h2>Conclusion</h2>
+  <p>
+    Le cube permet de visualiser clairement les différences entre les modes de positionnement.
+    Bien choisir la propriété <code>position</code> est essentiel pour une bonne ergonomie.
+  </p>
+</section>
+
+
+
+<script>
+  document.querySelectorAll('.question').forEach(question => {
+    const correct = question.dataset.correct;
+    const feedback = question.querySelector('.feedback');
+
+    question.querySelectorAll('input').forEach(input => {
+      input.addEventListener('change', () => {
+        question.querySelectorAll('label').forEach(label => {
+          label.style.color = '#e5e7eb';
+        });
+
+        const selected = input.value;
+        const selectedLabel = input.parentElement;
+
+        if (selected === correct) {
+          selectedLabel.style.color = '#4ade80';
+          feedback.textContent = '✔ Bonne réponse';
+          feedback.style.color = '#4ade80';
+        } else {
+          selectedLabel.style.color = '#f87171';
+          feedback.textContent = '✖ Mauvaise réponse';
+          feedback.style.color = '#f87171';
+
+          const correctInput = question.querySelector(`input[value="${correct}"]`);
+          correctInput.parentElement.style.color = '#4ade80';
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
