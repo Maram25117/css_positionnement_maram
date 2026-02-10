@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cours Interactif : Positions CSS</title>
+
+<style>
+/* STYLE DE BASE */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    line-height: 1.6;
+    padding: 20px;
+}
+header { text-align: center; padding: 30px 0; border-bottom: 1px solid #334155; margin-bottom: 20px;}
+header h1 { color: #38bdf8; }
+
+section {
+    max-width: 900px;
+    margin: 40px auto;
+    background: #1e293b;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+h2 { color: #7dd3fc; margin-bottom: 15px; border-left: 5px solid #38bdf8; padding-left: 15px; }
+p { margin-bottom: 15px; font-size: 0.95rem; }
+strong { color: #38bdf8; }
+
+/* ZONE DE DEMO */
+.demo-box {
+    background: #020617;
+    border: 2px dashed #475569;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+/* LES CUBES */
+.cube {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border-radius: 8px;
+    color: white;
+}
+.c-blue { background: #38bdf8; }
+.c-red { background: #f43f5e; border: 2px solid white; box-shadow: 0 0 10px rgba(244, 63, 94, 0.4); }
+
+/* --- CLASSES DE POSITION --- */
+
+/* RELATIVE */
+.pos-relative {
+    position: relative;
+    top: 25px;
+    left: 45px;
+}
+
+/* ABSOLUTE */
+.container-rel {
+    position: relative; /* Le parent n'est plus static */
+    height: 180px;
+}
+.pos-absolute {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+/* FIXED (Demo) */
+.fixed-demo-container {
+    position: relative;
+    height: 200px;
+    background: #020617;
+    border-radius: 8px;
+    overflow: hidden;
+    transform: translate(0, 0); /* Crée un référentiel local pour fixed */
+}
+.fixed-scroller-content { height: 100%; overflow-y: scroll; padding: 20px; }
+.pos-fixed {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    background: #a78bfa;
+}
+
+/* STICKY */
+.scroll-zone {
+    height: 180px;
+    overflow-y: auto;
+    background: #020617;
+}
+.pos-sticky {
+    position: sticky;
+    top: 0;
+    background: #fbbf24;
+    color: #000;
+    z-index: 5;
+}
+
+/* CODE DISPLAY */
+pre { background: #000; color: #38bdf8; padding: 12px; border-radius: 6px; font-size: 0.85rem; margin-top: 10px; border: 1px solid #334155;}
+
+/* QUIZ */
+.quiz .question { background: #0f172a; padding: 20px; border-radius: 10px; margin-bottom: 15px; }
+.quiz label { display: block; padding: 10px; margin: 5px 0; border: 1px solid #334155; border-radius: 5px; cursor: pointer; transition: 0.2s; }
+.quiz label:hover { background: #1e293b; }
+.feedback { margin-top: 10px; font-weight: bold; display: none; }
+.correct { color: #4ade80; border: 2px solid #4ade80 !important; }
+.wrong { color: #f87171; border: 2px solid #f87171 !important; }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Maîtriser le Positionnement CSS</h1>
+    <p>Guide interactif étape par étape</p>
+</header>
+
+<!-- 1. STATIC -->
+<section>
+    <h2>1. Position: Static</h2>
+    <p>C'est l'état par défaut. L'élément suit le flux normal. Les propriétés <code>top</code>, <code>left</code>, <code>right</code>, <code>bottom</code> et <code>z-index</code> <strong>n'ont aucun effet</strong>.</p>
+    <div class="demo-box">
+        <div class="cube c-blue">Cube 1</div>
+        <div class="cube c-red" style="top:20px; left:50px;">Static (top/left ignorés)</div>
+    </div>
+    <pre>
+.cube-static {
+  position: static;
+  top: 20px; /* Aucun effet */
+}</pre>
+</section>
+
+<!-- 2. RELATIVE -->
+<section>
+    <h2>2. Position: Relative</h2>
+    <p>L'élément est décalé par rapport à sa position d'origine. <strong>L'espace initial qu'il occupait est conservé</strong> (réservé), il ne pousse donc pas ses voisins.</p>
+    <div class="demo-box">
+        <div class="cube c-blue">Voisin</div>
+        <div class="cube c-red pos-relative">Relative</div>
+        <div class="cube c-blue">Voisin</div>
+    </div>
+    <pre>
+.cube-relative {
+  position: relative;
+  top: 25px;  /* Se décale vers le bas */
+  left: 45px; /* Se décale vers la droite */
+}</pre>
+</section>
+
+<!-- 3. ABSOLUTE -->
+<section>
+    <h2>3. Position: Absolute</h2>
+    <p>L'élément est retiré du flux normal. <strong>Important : pour que l'enfant se place correctement, son parent doit être positionné (hors de static, ex: relative ou absolute).</strong></p>
+    <div class="demo-box container-rel">
+        <div class="cube c-blue">Parent Relatif</div>
+        <div class="cube c-red pos-absolute">Absolute</div>
+    </div>
+    <pre>
+.parent {
+  position: relative; /* Référentiel (Non-static) */
+}
+.enfant-absolute {
+  position: absolute;
+  top: 15px;   /* 15px depuis le haut du parent */
+  right: 15px; /* 15px depuis la droite du parent */
+}</pre>
+</section>
+
+<!-- 4. FIXED -->
+<section>
+    <h2>4. Position: Fixed</h2>
+    <p>L'élément est retiré du flux et reste <strong>totalement immobile</strong> par rapport au viewport (fenêtre du navigateur), peu importe le défilement.</p>
+    <div class="fixed-demo-container">
+        <div class="cube c-red pos-fixed">FIXED</div> 
+        <div class="fixed-scroller-content">
+            <p style="color:#38bdf8; font-weight:bold;">SCROLLEZ CE CADRE :</p>
+            <div style="height: 600px; padding-top: 10px;">
+                <p>Le cube violet reste fixé au coin du cadre noir.</p>
+                <p>Il ne bouge jamais, même si ce texte défile.</p>
+            </div>
+        </div>
+    </div>
+    <pre>
+.cube-fixed {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+}</pre>
+</section>
+
+<!-- 5. STICKY -->
+<section>
+    <h2>5. Position: Sticky</h2>
+    <p>L'élément se comporte comme un "Relative" puis se bloque comme un "Fixed" lorsqu'il atteint un seuil défini lors du scroll (ex: <code>top: 0</code>).</p>
+    <div class="demo-box scroll-zone">
+        <div style="height: 40px; color: #64748b;">Défilez vers le bas...</div>
+        <div class="cube pos-sticky">STICKY</div>
+        <div style="height: 400px; padding-top:20px;">Le cube jaune reste collé en haut pendant le défilement.</div>
+    </div>
+    <pre>
+.cube-sticky {
+  position: sticky;
+  top: 0; /* Se bloque au sommet du parent */
+}</pre>
+</section>
+
+<!-- QUIZ -->
+<section>
+    <h2>Quiz de Validation</h2>
+    <div class="quiz">
+        <!-- Q1 -->
+        <div class="question" data-correct="A">
+            <p>1. Quelle est la valeur de position appliquée par défaut ?</p>
+            <label><input type="radio" name="q1" value="A"> static</label>
+            <label><input type="radio" name="q1" value="B"> relative</label>
+            <div class="feedback"></div>
+        </div>
+
+        <!-- Q2 (DE VOS CAPTURES) -->
+        <div class="question" data-correct="C">
+            <p>2. Laquelle de ces affirmations sur 'position: fixed;' est VRAIE ?</p>
+            <label><input type="radio" name="q2" value="A"> L'élément fixed est toujours relatif à son parent direct.</label>
+            <label><input type="radio" name="q2" value="B"> Un élément fixed ne peut pas avoir de z-index.</label>
+            <label><input type="radio" name="q2" value="C"> L'élément fixed est retiré du flux normal du document.</label>
+            <div class="feedback"></div>
+        </div>
+
+        <!-- Q3 (DE VOS CAPTURES) -->
+        <div class="question" data-correct="C">
+            <p>3. Que se passe-t-il si deux éléments positionnés se chevauchent et qu'aucun n'a de z-index ?</p>
+            <label><input type="radio" name="q3" value="A"> Le plus grand apparaît au-dessus.</label>
+            <label><input type="radio" name="q3" value="B"> Les deux deviennent semi-transparents.</label>
+            <label><input type="radio" name="q3" value="C"> Le dernier élément écrit dans le code HTML apparaît au-dessus.</label>
+            <div class="feedback"></div>
+        </div>
+
+        <!-- Q4 (DE VOS CAPTURES) -->
+        <div class="question" data-correct="A">
+            <p>4. Quelle est la principale différence entre 'relative' et 'absolute' concernant l'espace ?</p>
+            <label><input type="radio" name="q4" value="A"> 'relative' réserve l'espace d'origine, 'absolute' non.</label>
+            <label><input type="radio" name="q4" value="B"> 'absolute' réserve l'espace d'origine, 'relative' non.</label>
+            <div class="feedback"></div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question" data-correct="B">
+            <p>5. Pour qu'un enfant 'absolute' se place par rapport à son parent, le parent doit être :</p>
+            <label><input type="radio" name="q5" value="A"> static</label>
+            <label><input type="radio" name="q5" value="B"> Hors de static (ex: relative ou absolute)</label>
+            <div class="feedback"></div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question" data-correct="A">
+            <p>6. En 'position: static', que font les propriétés 'top' et 'left' ?</p>
+            <label><input type="radio" name="q6" value="A"> Elles n'ont aucun effet (ignorées).</label>
+            <label><input type="radio" name="q6" value="B"> Elles décalent l'élément de 20px.</label>
+            <div class="feedback"></div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="question" data-correct="B">
+            <p>7. Quel positionnement devient immobile après avoir atteint un seuil lors du scroll ?</p>
+            <label><input type="radio" name="q7" value="A"> absolute</label>
+            <label><input type="radio" name="q7" value="B"> sticky</label>
+            <div class="feedback"></div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="question" data-correct="B">
+            <p>8. Par défaut, 'position: fixed' se positionne par rapport à :</p>
+            <label><input type="radio" name="q8" value="A"> Son parent direct.</label>
+            <label><input type="radio" name="q8" value="B"> La fenêtre du navigateur (Viewport).</label>
+            <div class="feedback"></div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.querySelectorAll('.question').forEach(q => {
+    const correctValue = q.dataset.correct;
+    const feedback = q.querySelector('.feedback');
+    q.querySelectorAll('input').forEach(input => {
+        input.addEventListener('change', () => {
+            q.querySelectorAll('label').forEach(l => l.classList.remove('correct', 'wrong'));
+            feedback.style.display = 'block';
+            if (input.value === correctValue) {
+                input.parentElement.classList.add('correct');
+                feedback.innerHTML = "✔ Réponse correcte !";
+                feedback.style.color = "#4ade80";
+            } else {
+                input.parentElement.classList.add('wrong');
+                feedback.innerHTML = "✖ Mauvaise réponse.";
+                feedback.style.color = "#f87171";
+                q.querySelector(`input[value="${correctValue}"]`).parentElement.classList.add('correct');
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>
